@@ -1,30 +1,25 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
-type animal struct {
-	age int
-}
+func process(num int, done chan bool) {
+	for i := 0; i < num; i++ {
+		time.Sleep(500 * time.Millisecond)
+		fmt.Printf("process %d processed\n", i)
+	}
 
-func (a animal) walk() {
-	fmt.Println("walking")
-}
-
-type person struct {
-	animal
-	name string
-}
-
-func (p person) talk() {
-	fmt.Println("talking")
+	done <- true
 }
 
 func main() {
-	psyon := person{
-		animal: animal{
-			age: 21,
-		},
-		name: "psyon",
-	}
-	_ = psyon.age
+	done := make(chan bool, 1)
+
+	fmt.Println("before")
+	go process(4, done)
+	fmt.Println("after")
+
+	<-done
 }
