@@ -1,23 +1,30 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
-type DNF struct {
-	version string
+type animal struct {
+	age int
 }
 
-func (dnf *DNF) update(pkg string) {
-	fmt.Printf("updating package %s\n", pkg)
+func (a animal) walk() {
+	fmt.Println("walking")
+}
+
+type person struct {
+	animal
+	name string
+}
+
+func (p person) talk() {
+	fmt.Println("talking")
 }
 
 func main() {
-
-	fedora := &DNF{version: "41"}
-	fmt.Printf("%p\n", fedora)
-
-	fmt.Println(fedora.version)
-
-	fedora.update("curl")
+	psyon := person{
+		animal: animal{
+			age: 21,
+		},
+		name: "psyon",
+	}
+	_ = psyon.age
 }
